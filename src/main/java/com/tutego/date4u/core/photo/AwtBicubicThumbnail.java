@@ -10,6 +10,8 @@ import java.io.UncheckedIOException;
 import java.awt.RenderingHints;
 import javax.imageio.ImageIO;
 
+import org.springframework.beans.factory.ObjectProvider;
+import org.springframework.boot.autoconfigure.kafka.KafkaProperties.Consumer;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 

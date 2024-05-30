@@ -3,6 +3,7 @@ package com.tutego.date4u;
 // import org.springframework.boot.Banner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 // import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 // import org.springframework.context.ConfigurableApplicationContext;
@@ -14,6 +15,7 @@ import java.util.Arrays;
 
 import org.slf4j.*;
 
+@ConfigurationPropertiesScan
 @SpringBootApplication
 public class Date4uApplication {
 	// private String args[];
@@ -28,7 +30,7 @@ public class Date4uApplication {
 	private Logger log = LoggerFactory.getLogger(getClass());
 
 	public static void main(String[] args) {
-		// Date4uApplication test = new Date4uApplication();
+		Date4uApplication test = new Date4uApplication();
 
 		// new SpringApplicationBuilder(Date4uApplication.class).headless(false)
 		// .bannerMode(Banner.Mode.OFF).logStartupInfo(false).run(args);
@@ -48,7 +50,7 @@ public class Date4uApplication {
 		Arrays.stream(ctx.getBeanDefinitionNames()).sorted()
 				.forEach(System.out::println);
 
-		// test.logData();
+		test.logData();
 	}
 
 	// public static void run(String[] args) {
@@ -60,11 +62,12 @@ public class Date4uApplication {
 	// app.setBannerMode(Banner.Mode.OFF);
 	// }
 
-	// private void logData() {
-	// log.debug("Debug Level Log");
-	// log.info("Info Level Log");
-	// log.error("Log with arguments {}, {} und {}", 1, "2", 3.0);
-	// log.info("Log with arguments {}, {} and {}", 1, "2", 3.0);
-	// }
+	private void logData() {
+		log.debug("Debug Level Log");
+		log.trace("TRACE Level Log");
+		log.info("Info Level Log");
+		log.error("Log with arguments are {}, {} und {}", 1, "2", 3.0);
+		log.info("Log with arguments {}, {} and {}", 1, "2", 3.0);
+	}
 
 }
