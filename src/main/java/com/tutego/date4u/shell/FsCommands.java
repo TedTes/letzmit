@@ -11,6 +11,8 @@ import com.tutego.date4u.Date4uProperties;
 import com.tutego.date4u.core.FileSystem;
 import com.tutego.date4u.infrastructure.TutegoConfigurationProperties;
 
+import jakarta.validation.Path;
+
 @ShellComponent
 public class FsCommands {
     // private final FileSystem fs;
@@ -57,5 +59,12 @@ public class FsCommands {
     @ShellMethod("Display user home")
     public String userHome() {
         return env.getProperty("user.home");
+    }
+
+    @ShellMethod("Display if a path exists")
+    public String exists(Path path) {
+        System.out.println(path);
+        boolean exists = true;
+        return String.format("Path to '%s' %s exist", path, exists ? "does" : "doesn't");
     }
 }

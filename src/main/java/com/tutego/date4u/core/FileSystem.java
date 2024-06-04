@@ -11,15 +11,22 @@ import java.io.UncheckedIOException;
 
 @Service
 public class FileSystem {
-    private final Path root = Paths.get(System.getProperty("user.home")).resolve("fs");
+    private Path root = Paths.get(System.getProperty("user.home")).resolve("fs");
 
     public FileSystem() {
+        this(Paths.get(System.getProperty("user.home"))
+                .resolve("fs").toAbsolutePath().normalize());
         try {
             if (!Files.isDirectory(root))
                 Files.createDirectory(root);
+
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }
+
+    FileSystem(Path root) {
+        this.root = root;
     }
 
     public long getFreeDiskSpace() {
@@ -28,7 +35,7 @@ public class FileSystem {
 
     public byte[] load(String filename) {
         try {
-            return Files.readAllBytes(root.resolve(filename));
+            return Files.readAllBytes(resolve(filename));
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
@@ -36,9 +43,16 @@ public class FileSystem {
 
     public void store(String filename, byte[] bytes) {
         try {
-            Files.write(root.resolve(filename), bytes);
+            Files.write(resolve(filename), bytes);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }
+
+    private Path resolve(String filename) {
+        Path path = root.resolve(filename).toAbsolutePath().normalize();
+        if (!path.startsWith(root))
+            throw new SecurityException("Access to " + path + " denied");
+        return path;
     }
 }

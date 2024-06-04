@@ -6,12 +6,15 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
 // import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.i18n.LocaleContextHolder;
+import org.springframework.context.support.ResourceBundleMessageSource;
 // import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.unit.DataSize;
 
 import com.tutego.date4u.core.FileSystem;
 
 import java.util.Arrays;
+import java.util.Locale;
 
 import org.slf4j.*;
 
@@ -53,6 +56,14 @@ public class Date4uApplication {
 		test.logData();
 	}
 
+	ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+	Locale lang = LocaleContextHolder.getLocale();
+	String msg1 = messageSource.getMessage("shell.fs.path-exist", new Object[] { "c:/test" }, lang);
+	String msg2 = messageSource.getMessage("shell.fs.path-not-exist", new Object[] { "c:/test" }, lang);
+
+	// messageSource.@setBasename("messages/shell/fscommands");
+	// messageSource.setDefaultEncoding("UTF-8");
+	// messageSource.setUseCodeAsDefaultMessage(true);
 	// public static void run(String[] args) {
 	// Date4uApplication test = new Date4uApplication();
 	// test.logData();
