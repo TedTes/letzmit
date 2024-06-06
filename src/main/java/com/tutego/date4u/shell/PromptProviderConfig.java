@@ -8,14 +8,12 @@ import org.springframework.shell.jline.PromptProvider;
 
 @Configuration
 public class PromptProviderConfig {
-    // private static final PromptProvider userPromptProvider = () -> new
-    // AttributedString("date4u:>");
-    // private static final PromptProvider adminPromptProvider = () -> new
-    // AttributedString("date4u[admin]:>",
-    // AttributedStyle.DEFAULT.foreground(AttributedStyle.RED));
+    private static final PromptProvider userPromptProvider = () -> new AttributedString("date4u:>");
+    private static final PromptProvider adminPromptProvider = () -> new AttributedString("date4u[admin]:>",
+            AttributedStyle.DEFAULT.foreground(AttributedStyle.RED));
 
     // @Bean
-    // PromptProvider myPromptProvider() {
+    // PromptProvider customPromptProvider() {
     // // if ( is admin )
     // // return adminPromptProvider;
     // // else

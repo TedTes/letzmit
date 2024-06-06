@@ -6,12 +6,15 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheConfig;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.tutego.date4u.core.FileSystem;
 import com.tutego.date4u.interfaces.ThumbnailRendering;
 
 @Service
+@CacheConfig(cacheNames = "date4u.jsonhotprofiles")
 public class PhotoService {
     private final FileSystem fs;
     // @Autowired
@@ -24,12 +27,19 @@ public class PhotoService {
         this.thumbnail = thumbnail;
     }
 
+    @Cacheable("date4u.filesystem.file")
     public Optional<byte[]> download(String name) {
         try {
             return Optional.of(fs.load(name + ".jpeg"));
         } catch (UncheckedIOException e) {
             return Optional.empty();
         }
+    }
+
+    @Cacheable(cacheNames = "date4u.filesystem.file", keyGenerator = "photoNameKeyGenerator")
+    // @Cacheable(cacheNames = "date4u.filesystem.file", key = "#photo.name")
+    public Optional<byte[]> download(Photo photo) {
+        return download(photo.getName());
     }
 
     public String upload(byte[] imageBytes) {

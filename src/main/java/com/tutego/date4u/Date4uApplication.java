@@ -4,6 +4,7 @@ package com.tutego.date4u;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan;
+import org.springframework.cache.annotation.EnableCaching;
 // import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -20,6 +21,7 @@ import org.slf4j.*;
 
 @ConfigurationPropertiesScan
 @SpringBootApplication
+@EnableCaching
 public class Date4uApplication {
 	// private String args[];
 
@@ -56,10 +58,13 @@ public class Date4uApplication {
 		test.logData();
 	}
 
-	ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
-	Locale lang = LocaleContextHolder.getLocale();
-	String msg1 = messageSource.getMessage("shell.fs.path-exist", new Object[] { "c:/test" }, lang);
-	String msg2 = messageSource.getMessage("shell.fs.path-not-exist", new Object[] { "c:/test" }, lang);
+	// ResourceBundleMessageSource messageSource = new
+	// ResourceBundleMessageSource();
+	// Locale lang = LocaleContextHolder.getLocale();
+	// String msg1 = messageSource.getMessage("shell.fs.path-exist", new Object[] {
+	// "c:/test" }, lang);
+	// String msg2 = messageSource.getMessage("shell.fs.path-not-exist", new
+	// Object[] { "c:/test" }, lang);
 
 	// messageSource.@setBasename("messages/shell/fscommands");
 	// messageSource.setDefaultEncoding("UTF-8");

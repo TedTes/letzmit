@@ -5,7 +5,7 @@ import org.springframework.shell.jline.PromptProvider;
 import org.springframework.stereotype.Component;
 
 @Component
-class MyPromptProvider implements PromptProvider {
+class CustomPromptProvider implements PromptProvider {
     @Override
     public AttributedString getPrompt() {
         return new AttributedString("date4u:>");

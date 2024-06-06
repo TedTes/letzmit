@@ -44,13 +44,24 @@
      <artifactId>tornadofx-android-compat</artifactId>
      <version>1.0.1</version>
    </dependency>
- 
+ <dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-cache</artifactId>
+</dependency>
+<dependency>
+<groupId>com.github.ben-manes.caffeine</groupId>
+<artifactId>caffeine</artifactId>
+<version>3.1.8</version>
+</dependency>
    <dependency>
      <groupId>com.jtransc</groupId>
      <artifactId>jtransc-rt</artifactId>
      <version>0.5.0-ALPHA4</version>
    </dependency>
- 
+ <dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-json</artifactId>
+</dependency>
    <dependency>
      <groupId>org.apache.activemq</groupId>
      <artifactId>activemq-client</artifactId>
