@@ -9,6 +9,7 @@ import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.scheduling.annotation.EnableAsync;
 // import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.util.unit.DataSize;
 
@@ -22,6 +23,7 @@ import org.slf4j.*;
 @ConfigurationPropertiesScan
 @SpringBootApplication
 @EnableCaching
+@EnableAsync
 public class Date4uApplication {
 	// private String args[];
 

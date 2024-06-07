@@ -1,8 +1,11 @@
 package com.tutego.date4u;
 
+import java.time.LocalDateTime;
 import java.util.Base64;
 
+import org.assertj.core.api.InstanceOfAssertFactories;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -13,15 +16,21 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import com.tutego.date4u.core.FileSystem;
 import com.tutego.date4u.core.photo.AwtBicubicThumbnail;
+import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.core.photo.PhotoService;
-import static org.assertj.core.api.Assertions.assertThat;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.ConstraintViolationException;
+
+//import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.BDDMockito.*;
-
+import com.tutego.date4u.core.photo.Photo;
 // @SpringBootTest
 
 @ExtendWith(MockitoExtension.class)
@@ -44,6 +53,41 @@ class PhotoServiceTest {
     // given(fileSystem.getFreeDiskSpace()).willReturn(1L);
     // given(fileSystem.load(anyString())).willReturn(MINIMAL_JPG);
     // }
+
+    @Nested
+    class Validator {
+
+        @Test
+        void photo_is_valid() {
+
+            // Photo photo = new Photo(1L, new Profile(), "fillmorespic", false,
+            // LocalDateTime.MIN);
+            Photo photo = new Photo();
+            assertThatCode(() -> photoService.download(photo)).doesNotThrowAnyException();
+        }
+
+        @Test
+        void photo_has_invalid_created_date() {
+            LocalDateTime future = LocalDateTime.of(2500, 1, 1, 0, 0, 0);
+            // Photo photo = new Photo(1L, new Profile(), "fillmorespic", false, future);
+            Photo photo = new Photo();
+
+            assertThatThrownBy(() -> photoService.download(photo))
+                    .isInstanceOf(ConstraintViolationException.class)
+                    .extracting(
+                            throwable -> ((ConstraintViolationException) throwable).getConstraintViolations(),
+                            as(InstanceOfAssertFactories.collection(ConstraintViolation.class)))
+                    .hasSize(1)
+                    .first(InstanceOfAssertFactories.type(ConstraintViolation.class))
+                    .satisfies(vio -> {
+                        assertThat(vio.getRootBeanClass()).isSameAs(PhotoService.class);
+                        assertThat(vio.getLeafBean()).isExactlyInstanceOf(Photo.class);
+                        assertThat(vio.getPropertyPath()).hasToString("download.photo.created");
+                        assertThat(vio.getInvalidValue()).isEqualTo(future);
+                        // assertThat( vio.getMessage() ).isEqualTo( … );
+                    });
+        }
+    }
 
     private static class DummyFileSystem extends FileSystem {
         @Override

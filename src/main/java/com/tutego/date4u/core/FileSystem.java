@@ -2,6 +2,7 @@ package com.tutego.date4u.core;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.concurrent.Future;
 
 import org.springframework.stereotype.Service;
 
@@ -47,6 +48,14 @@ public class FileSystem {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }
+
+    public void store(String filename, Future<byte[]> bytes) {
+        // try {
+        // Files.write(resolve(filename), bytes);
+        // } catch (IOException e) {
+        // throw new UncheckedIOException(e);
+        // }
     }
 
     private Path resolve(String filename) {
