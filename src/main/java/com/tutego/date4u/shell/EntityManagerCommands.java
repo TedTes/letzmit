@@ -8,15 +8,17 @@ import org.springframework.shell.table.TableModel;
 import org.springframework.shell.table.BorderStyle;
 import org.springframework.shell.table.Table;
 import com.tutego.date4u.core.photo.profile.Profile;
-
+import java.util.List;
 import jakarta.persistence.EntityManager;
 import static java.util.Objects.isNull;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 @ShellComponent
 public class EntityManagerCommands {
     private final EntityManager em;
+    private final static int PAGE_SIZE = 10;
 
     public EntityManagerCommands(EntityManager em) {
         this.em = em;
@@ -43,5 +45,21 @@ public class EntityManagerCommands {
         Table table = new TableBuilder(tableModel)
                 .addFullBorder(BorderStyle.fancy_light).build();
         return table.render(100);
+    }
+
+    @ShellMethod("Display profiles for a given page")
+    public List<Profile> page(int page) {
+        return em.createQuery("SELECT p FROM Profile p", Profile.class)
+                .setFirstResult(page * PAGE_SIZE)
+                .setMaxResults(PAGE_SIZE)
+                .getResultList();
+    }
+
+    @ShellMethod("Display latest seen profiles")
+    public List<Profile> lastseen() {
+        return em.createQuery("SELECT p FROM Profile p WHERE p.lastseen > :lastseen",
+                Profile.class)
+                .setParameter("lastseen", LocalDateTime.now().minusMonths(6))
+                .getResultList();
     }
 }
