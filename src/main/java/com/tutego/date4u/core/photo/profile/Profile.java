@@ -63,7 +63,7 @@ public class Profile {
         throw new UnsupportedOperationException("Unimplemented method 'setGender'");
     }
 
-    private void setManelength(int manelength2) {
+    public void setManelength(int manelength2) {
         this.manelength = (short) manelength2;
         throw new UnsupportedOperationException("Unimplemented method 'setManelength'");
     }

@@ -4,6 +4,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.shell.standard.*;
 import org.springframework.shell.table.TableBuilder;
 import org.springframework.shell.table.TableModelBuilder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.shell.table.TableModel;
 import org.springframework.shell.table.BorderStyle;
 import org.springframework.shell.table.Table;
@@ -61,5 +62,12 @@ public class EntityManagerCommands {
                 Profile.class)
                 .setParameter("lastseen", LocalDateTime.now().minusMonths(6))
                 .getResultList();
+    }
+
+    @Transactional
+    @ShellMethod("Set mane length of a given profile")
+    public void updateManelength(long id, int manelength) {
+        Optional.ofNullable(em.find(Profile.class, id))
+                .ifPresent(p -> p.setManelength(manelength));
     }
 }
