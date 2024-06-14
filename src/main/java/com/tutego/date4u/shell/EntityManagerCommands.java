@@ -8,6 +8,8 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.shell.table.TableModel;
 import org.springframework.shell.table.BorderStyle;
 import org.springframework.shell.table.Table;
+
+import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.core.photo.profile.Profile;
 import java.util.List;
 import jakarta.persistence.EntityManager;
@@ -69,5 +71,14 @@ public class EntityManagerCommands {
     public void updateManelength(long id, int manelength) {
         Optional.ofNullable(em.find(Profile.class, id))
                 .ifPresent(p -> p.setManelength(manelength));
+    }
+
+    @ShellMethod("Display all photos of a given profile by ID")
+    public void photos(long id) {
+        Optional.ofNullable(em.find(Profile.class, id))
+                .ifPresent(profile -> {
+                    for (Photo photo : profile.getPhotos())
+                        System.out.println(photo.getName());
+                });
     }
 }

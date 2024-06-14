@@ -6,20 +6,33 @@ import java.time.LocalDateTime;
 import org.springframework.cache.interceptor.KeyGenerator;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
 
+import jakarta.persistence.Access;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.AccessType;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 import jakarta.validation.constraints.Pattern;
 import com.tutego.date4u.core.photo.profile.*;
 
+@Entity
+@Access(AccessType.FIELD)
 @Configuration
 public class Photo {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
     @Min(1)
-    public Profile profile;
+    @ManyToOne
+    @JoinColumn(name = "profile_fk")
+    private Profile profile;
     @NotNull
     @Pattern(regexp = "[\\w_-]{1,200}")
     public String name;
@@ -61,6 +74,9 @@ public class Photo {
 
     public void setProfilePhoto(boolean profilePhoto) {
         isProfilePhoto = profilePhoto;
+    }
+
+    public void setProfile(Profile profile) {
     }
 
     public LocalDateTime getCreated() {
