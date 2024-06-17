@@ -26,6 +26,7 @@ import com.tutego.date4u.core.photo.Photo;
 @Access(AccessType.FIELD)
 @Configuration
 public class Profile {
+    public static final int FEE = 0;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -89,7 +90,7 @@ public class Profile {
         throw new UnsupportedOperationException("Unimplemented method 'setBirthdate'");
     }
 
-    private void setNickname(String nickname2) {
+    public void setNickname(String nickname2) {
         this.nickname = nickname2;
         throw new UnsupportedOperationException("Unimplemented method 'setNickname'");
     }
