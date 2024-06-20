@@ -21,7 +21,7 @@ import com.tutego.date4u.interfaces.ProfileRepository;
 public class RepositoryCommands {
     @Autowired
     private ProfileRepository profiles;
-
+    // QProfile profile = QProfile.profile;
     private static final int PAGE_SIZE = 10;
     // private final ProfileRepository profiles;
     private Lazy<Page<Profile>> currentPage;
@@ -79,6 +79,13 @@ public class RepositoryCommands {
         });
         return profiles.findById(1L);
     }
+
+    // @ShellMethod("Display profiles with mane length between a given min and max
+    // value")
+    // public void profilesBetween(short min, short max) {
+    // profiles.findAll(QProfile.profile.manelength.between(min, max))
+    // .forEach(System.out::println);
+    // }
 
     // DERIVED QUERIES METHOD STRUCTURE
     // Optional<Profile> findFirstByOrderByManelengthDesc();
