@@ -29,7 +29,7 @@ public class Photo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long id;
 
-    @Min(1)
+    // @Min(1)
     @ManyToOne
     @JoinColumn(name = "profile_fk")
     private Profile profile;
