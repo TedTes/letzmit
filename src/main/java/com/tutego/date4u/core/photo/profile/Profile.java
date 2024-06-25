@@ -20,6 +20,7 @@ import jakarta.persistence.Column;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.lang.Nullable;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.tutego.date4u.core.photo.Photo;
 
 @Entity
@@ -38,9 +39,11 @@ public class Profile {
     private Byte attractedToGender;
     private String description;
     private LocalDateTime lastseen;
+    // @JsonIgnore
     @OneToOne(mappedBy = "profile")
     private Unicorn unicorn;
 
+    // @JsonIgnore
     @OneToMany(mappedBy = "profile", fetch = FetchType.EAGER)
     @OrderBy("created")
     private List<Photo> photos = new ArrayList<>();
@@ -50,7 +53,7 @@ public class Profile {
 
     public Profile(String nickname, LocalDate birthdate,
             int manelength, int gender,
-            Integer attractedToGender, String description,
+            Byte attractedToGender, String description,
             LocalDateTime lastseen) {
         setNickname(nickname);
         setBirthdate(birthdate);
@@ -61,77 +64,75 @@ public class Profile {
         setLastseen(lastseen);
     }
 
-    private void setLastseen(LocalDateTime lastseen2) {
+    public void setLastseen(LocalDateTime lastseen2) {
         this.lastseen = lastseen2;
-        throw new UnsupportedOperationException("Unimplemented method 'setLastseen'");
     }
 
-    private void setDescription(String description2) {
+    public void setDescription(String description2) {
         this.description = description2;
-        throw new UnsupportedOperationException("Unimplemented method 'setDescription'");
     }
 
-    public void setAttractedToGender(@Nullable Integer attractedToGender) {
+    public void setAttractedToGender(@Nullable Byte attractedToGender) {
         this.attractedToGender = attractedToGender == null ? null : attractedToGender.byteValue();
     }
 
-    private void setGender(int gender2) {
+    public void setGender(int gender2) {
         this.gender = (byte) gender2;
-        throw new UnsupportedOperationException("Unimplemented method 'setGender'");
     }
 
     public void setManelength(int manelength2) {
         this.manelength = (short) manelength2;
-        throw new UnsupportedOperationException("Unimplemented method 'setManelength'");
     }
 
-    private void setBirthdate(LocalDate birthdate2) {
+    public void setBirthdate(LocalDate birthdate2) {
         this.birthdate = birthdate2;
-        throw new UnsupportedOperationException("Unimplemented method 'setBirthdate'");
     }
 
     public void setNickname(String nickname2) {
         this.nickname = nickname2;
-        throw new UnsupportedOperationException("Unimplemented method 'setNickname'");
     }
 
     public String getNickname() {
         return this.nickname;
-        // throw new UnsupportedOperationException("Unimplemented method
-        // 'getNickname'");
     }
 
     public short getManelength() {
         return this.manelength;
-        // throw new UnsupportedOperationException("Unimplemented method
-        // 'getManelength'");
     }
 
     public Long getId() {
         return this.id;
-        // throw new UnsupportedOperationException("Unimplemented method
-        // 'getNickname'");
     }
 
     public LocalDate getBirthdate() {
         return this.birthdate;
-        // throw new UnsupportedOperationException("Unimplemented method
-        // 'getManelength'");
     }
 
     public Unicorn getUnicorn() {
         return new Unicorn();
     }
 
-    // public Profile add(Photo photo) {
-    // photos.add(photo);
-    // return this;
-    // }
-
     public void setUnicorn(Unicorn unicorn) {
     }
 
     public List<Photo> getPhotos() {
         return photos;
+    }
+
+    public byte getGender() {
+        return gender;
+    }
+
+    public Byte getAttractedToGender() {
+        return attractedToGender;
+    }
+
+    public LocalDateTime getLastseen() {
+
+        return lastseen;
+    }
+
+    public String getDescription() {
+        return description;
     }
 }
