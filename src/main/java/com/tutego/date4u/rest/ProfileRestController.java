@@ -7,6 +7,8 @@ import com.tutego.date4u.core.photo.Photo;
 import com.tutego.date4u.core.photo.PhotoService;
 import com.tutego.date4u.interfaces.ProfileRepository;
 
+import jakarta.validation.Valid;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -100,7 +102,7 @@ public class ProfileRestController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> update(@PathVariable String id, @RequestBody ProfileDto dto) {
+    public ResponseEntity<?> update(@PathVariable String id, @Valid @RequestBody ProfileDto dto) {
         if (dto.id() != null && dto.id() != Long.parseLong(id))
             return new ResponseEntity<String>(
                     "Unable to update profile, because ID of path variable "
