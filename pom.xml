@@ -181,11 +181,50 @@
 <groupId>org.springframework.boot</groupId>
 <artifactId>spring-boot-starter-security</artifactId>
 </dependency>
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-log4j2</artifactId>
+</dependency>
+<dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-actuator</artifactId>
+</dependency>
+<dependency>
+<groupId>io.micrometer</groupId>
+<artifactId>micrometer-registry-prometheus</artifactId>
+</dependency>
+<!-- <dependency>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-****</artifactId>
+   <exclusions>
+<exclusion>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-starter-logging</artifactId>
+</exclusion>
+</exclusions>
+</dependency> -->
  </dependencies>
 
 	<build>
 		<plugins>
     <plugin>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-maven-plugin</artifactId>
+<configuration>
+<image>
+<name>tutego.date4u</name>
+</image>
+</configuration>
+</plugin>
+    <plugin>
+<groupId>org.springframework.boot</groupId>
+<artifactId>spring-boot-maven-plugin</artifactId>
+<executions><execution>
+<id>build-info</id>
+<goals><goal>build-info</goal></goals>
+</execution></executions>
+</plugin>
+    <!-- <plugin>
 <groupId>org.jsonschema2pojo</groupId>
 <artifactId>jsonschema2pojo-maven-plugin</artifactId>
 <executions>
@@ -204,7 +243,7 @@ ${project.basedir}/src/main/resources/randomuserme.jsd.json
 <goals><goal>generate</goal></goals>
 </execution>
 </executions>
-</plugin>
+</plugin> -->
     <plugin>
 <groupId>org.apache.maven.plugins</groupId>
 <artifactId>maven-compiler-plugin</artifactId>

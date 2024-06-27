@@ -13,7 +13,7 @@ import jakarta.persistence.Tuple;
 
 public interface UnicornRepository extends JpaRepository<Unicorn, Long> {
     @Query(value = """
-            SELECT EMAIL, PASSWORD,
+            SELECT u.email , u.password
             FROM Unicorn u
             WHERE u.email = :email
             """)

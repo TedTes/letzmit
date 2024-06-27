@@ -1,0 +1,22 @@
+version: "3.8"
+services:
+database:
+image: thomseno/h2
+container_name: db
+ports:
+- '9092:9092'
+- '8082:8082'
+volumes:
+- 'C:\Users\christian:/h2-data'
+application:
+image: tutego.date4u:latest
+container_name: date4u-server
+restart: always
+ports:
+- "8080:8080"
+depends_on:
+- database
+environment:
+- SPRING_DATASOURCE_URL=jdbc:h2:tcp://db/./unicorns
+- SPRING_DATASOURCE_USERNAME=user
+- SPRING_DATASOURCE_PASSWORD=pass
